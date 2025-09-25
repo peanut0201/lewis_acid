@@ -64,7 +64,6 @@ numpy
 scipy>=1.3
 sympy>=1.5
 tensorflow>=2.1
-tensorflow_addons
 tqdm
 ```
 

@@ -1,5 +1,5 @@
 import tensorflow as tf
-from tensorflow.keras import layers
+from tensorflow.python.keras import layers
 
 
 class Envelope(layers.Layer):

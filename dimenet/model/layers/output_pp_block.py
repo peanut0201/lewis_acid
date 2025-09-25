@@ -1,11 +1,11 @@
 import tensorflow as tf
-from tensorflow.keras import layers
+from tensorflow.python.keras import layers
 
 from ..initializers import GlorotOrthogonal
 
 
 class OutputPPBlock(layers.Layer):
-    def __init__(self, emb_size, out_emb_size, num_dense, num_targets=12,
+    def __init__(self, emb_size, out_emb_size, num_dense, num_targets=4,
                  activation=None, output_init='zeros', name='output', **kwargs):
         super().__init__(name=name, **kwargs)
         weight_init = GlorotOrthogonal()

@@ -1,5 +1,5 @@
 import tensorflow as tf
-from tensorflow.keras import layers
+from tensorflow.python.keras import layers
 
 from .residual_layer import ResidualLayer
 from ..initializers import GlorotOrthogonal

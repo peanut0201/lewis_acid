@@ -1,6 +1,6 @@
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras import layers
+from tensorflow.python.keras import layers
 
 from .envelope import Envelope
 
@@ -15,8 +15,10 @@ class BesselBasisLayer(layers.Layer):
 
         # Initialize frequencies at canonical positions
         def freq_init(shape, dtype):
-            return tf.constant(np.pi * np.arange(1, shape + 1, dtype=np.float32), dtype=dtype)
-        self.frequencies = self.add_weight(name="frequencies", shape=self.num_radial,
+            # shape is a tuple like (num_radial,), so we need shape[0]
+            num_freqs = shape[0] if isinstance(shape, tuple) else shape
+            return tf.constant(np.pi * np.arange(1, num_freqs + 1, dtype=np.float32), dtype=dtype)
+        self.frequencies = self.add_weight(name="frequencies", shape=(self.num_radial,),
                                            dtype=tf.float32, initializer=freq_init, trainable=True)
 
     def call(self, inputs):

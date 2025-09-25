@@ -1,4 +1,4 @@
-from tensorflow.keras import layers
+from tensorflow.python.keras import layers
 
 
 class ResidualLayer(layers.Layer):

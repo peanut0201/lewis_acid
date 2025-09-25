@@ -18,23 +18,29 @@ num_before_skip: 1
 num_after_skip: 2
 num_dense_output: 3
 
-num_train: 110000
-num_valid: 10000
+# FIA数据集配置
+num_train: 1600  # 80% of 2000
+num_valid: 400   # 20% of 2000
 data_seed: 42
-dataset: "data/qm9_eV.npz"
+dataset: "data/FIA49k_Al.json"  # 使用JSON文件
 logdir: "."
 
-num_steps: 3000000
+# 训练参数（针对小数据集调整）
+num_steps: 50000  # 减少步数，适合小数据集
 ema_decay: 0.999
 
 learning_rate: 0.001
-warmup_steps: 3000
+warmup_steps: 1000
 decay_rate: 0.01
-decay_steps: 4000000
+decay_steps: 25000
 
-batch_size: 32
-evaluation_interval: 10000
-save_interval: 10000
+batch_size: 16  # 减小batch size，适合小数据集
+evaluation_interval: 1000  # 更频繁的评估
+save_interval: 5000
 restart: None
-comment: "final"
-targets: ['U0']  # ['mu', 'alpha', 'homo', 'lumo', 'gap', 'r2', 'zpve', 'U0', 'U', 'H', 'G', 'Cv']
+comment: "fia_al_lewis_acid"
+targets: ['fia_gas-DSDBLYP', 'fia_gas-PBEh3c', 'fia_solv-DSDBLYP', 'fia_solv-PBEh3c']
+
+# 冻结训练配置
+freeze_backbone: True  # 是否冻结主干网络，只训练输出头
+pretrained_model_path: "pretrained/dimenet_pp/alpha"  # 预训练模型路径 - 极化率权重，最适合路易斯酸性预测

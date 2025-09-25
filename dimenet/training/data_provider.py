@@ -42,7 +42,14 @@ class DataProvider:
         self.shapes_input['R'] = [None, 3]
         for key in index_keys:
             self.shapes_input[key] = [None]
+        
+        # 动态计算目标值形状，支持4个FIA值
         self.shape_target = [None, len(data_container.target_keys)]
+        
+        # 打印FIA目标信息
+        print(f"FIA目标值形状: {self.shape_target}")
+        print(f"FIA目标键: {data_container.target_keys}")
+        print(f"目标值数量: {len(data_container.target_keys)}")
 
     def shuffle_train(self):
         """Shuffle the training data"""
@@ -84,6 +91,13 @@ class DataProvider:
             for key, dtype in self.dtypes_input.items():
                 inputs[key] = tf.constant(batch[key], dtype=dtype)
             targets = tf.constant(batch['targets'], dtype=tf.float32)
+            
+            # 添加FIA目标值调试信息（仅在第一次调用时打印）
+            if not hasattr(self, '_debug_printed'):
+                print(f"FIA目标值形状: {targets.shape}")
+                print(f"FIA目标值示例: {targets.numpy()[:2] if len(targets) > 0 else 'Empty'}")
+                self._debug_printed = True
+            
             return (inputs, targets)
 
     def get_dataset(self, split):

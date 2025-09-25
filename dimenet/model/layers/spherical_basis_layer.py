@@ -1,6 +1,6 @@
 import sympy as sym
 import tensorflow as tf
-from tensorflow.keras import layers
+from tensorflow.python.keras import layers
 
 from .basis_utils import bessel_basis, real_sph_harm
 from .envelope import Envelope
